@@ -1,0 +1,47 @@
+.decoder-box {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.decoder-box h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: var(--text);
+}
+
+.decoder-input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  margin-bottom: 12px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.decoderButton {
+  width: 100%;
+  height: 42px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.decoderButton:hover {
+  background: #1d4ed8;
+}
+
+.error-message {
+  margin-top: 10px;
+
+  color: #dc2626;
+
+  font-size: 14px;
+}

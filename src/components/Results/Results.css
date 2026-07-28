@@ -1,0 +1,40 @@
+.results-box {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.results-box h2 {
+  margin-bottom: 20px;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th {
+  background: var(--card-bg);
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.api-message {
+  margin-bottom: 15px;
+  padding: 10px;
+
+  border-radius: 8px;
+
+  background: var(--card-bg);
+  color: #2563eb;
+
+  font-size: 14px;
+}
