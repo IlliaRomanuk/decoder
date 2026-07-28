@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# VIN Decoder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for decoding vehicle VIN codes using the public NHTSA vPIC API. Lets you decode a VIN, browse the history of recent lookups, and explore the list of variables (fields) supported by the API.
 
-Currently, two official plugins are available:
+🔗 **Live demo:** https://IlliaRomanuk.github.io/decoder/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- 🔍 Decode a 17-character VIN via the official NHTSA vPIC API
+- 🕓 History of the last 3 decoded VINs with one-click re-lookup
+- 📋 Full list of API variables with descriptions
+- 🌗 Light/dark theme toggle with the choice persisted between sessions
+- ⚡ Request caching via TanStack Query — navigating between pages doesn't trigger unnecessary network requests
+- ✅ Client-side VIN validation before sending a request
+- 📱 Responsive layout
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Category | Technologies |
+|---|---|
+| Language | TypeScript |
+| UI | React 19 |
+| Routing | React Router (HashRouter) |
+| Server state | TanStack Query (React Query), Axios |
+| Build tool | Vite |
+| Styling | CSS with CSS custom properties (light/dark theming) |
+| Linting | ESLint + typescript-eslint |
+| Deployment | GitHub Pages (gh-pages) |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## API
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+The app uses the public [NHTSA vPIC API](https://vpic.nhtsa.dot.gov/api/):
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- `GET /vehicles/decodevin/{vin}?format=json` — decode a VIN
+- `GET /vehicles/getvehiclevariablelist?format=json` — list of supported variables
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+No API key is required — the service is free and open.
+
+## Project Structure
+
+```
+src/
+├── assets/                  # static files (icons, etc.)
+├── components/
+│   ├── Header/               # top navigation and theme toggle
+│   ├── Aside/                 # sidebar (input form + history)
+│   ├── DecoderInput/          # VIN input and validation form
+│   ├── DecoderHistory/        # list of recently decoded VINs
+│   └── Results/                # decoded results table
+├── hooks/
+│   ├── useDecodeVIN.ts        # VIN decode mutation (React Query)
+│   └── useTheme.ts            # light/dark theme management
+├── pages/
+│   ├── Home/                   # main page — form + results
+│   ├── Variables/              # list of API variables
+│   └── VariableDetails/        # details of a single variable
+├── services/
+│   └── api.ts                  # axios client and request functions for the NHTSA API
+├── type/
+│   ├── api.type.ts
+│   ├── result.type.ts
+│   └── variable.type.ts
+├── App.tsx                     # application routes
+├── Layout.tsx                   # shared layout (Header + Outlet)
+└── main.tsx                     # entry point, providers (QueryClient, Router)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+git clone https://github.com/IlliaRomanuk/decoder.git
+cd decoder
+npm install
 ```
+
+### Development
+```bash
+npm run dev
+```
+The app will be available at `http://localhost:5173`.
+
+### Production build
+```bash
+npm run build
+```
+
+### Preview the production build locally
+```bash
+npm run preview
+```
+
+### Linting
+```bash
+npm run lint
+```
+
+### Deploy to GitHub Pages
+```bash
+npm run deploy
+```
+This runs the build (`predeploy`) automatically and publishes the contents of the `dist` folder to the `gh-pages` branch.
+
+## package.json Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Type-check (`tsc -b`) and build the project |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Locally preview the production build |
+| `npm run deploy` | Build and publish to GitHub Pages |
+
+## Roadmap
+
+- [ ] Sanitize HTML variable descriptions (DOMPurify)
+- [ ] Side-by-side comparison of multiple decoded VINs
+- [ ] Export decoded results (CSV)
+- [ ] 404 page
+- [ ] Human-readable handling of API error edge cases
+
+## License
+
+This project was built for learning purposes.
