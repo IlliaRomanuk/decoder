@@ -2,7 +2,7 @@
 
 A web application for decoding vehicle VIN codes using the public NHTSA vPIC API. Lets you decode a VIN, browse the history of recent lookups, and explore the list of variables (fields) supported by the API.
 
-🔗 **Live demo:** https://IlliaRomanuk.github.io/decoder/
+🔗 **Live demo:** https://illiaromanuk.github.io/decoder/#/
 
 ## Features
 
